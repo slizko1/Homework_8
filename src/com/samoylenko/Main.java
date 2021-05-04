@@ -6,7 +6,7 @@ public class Main {
 
     public static void main(String[] args) {
         //task1();
-        //task2();
+        task2();
     }
 
     //        1) Электронные часы показывают время в формате от 00:00 до 23:59.
@@ -46,7 +46,60 @@ public class Main {
         }
         return result;
     }
+
+    //        2) Найти количество счастливых билетиков на трамвай от 000001 до 999999
+    //        (те у которых сумма первых 3 цифр равна сумме последних 3)
+    public static void task2() {
+        StringBuilder[] tickets = new StringBuilder[999999];
+        for (int i = 0; i < tickets.length; i++) {
+            if (i < 10) {
+                tickets[i] = new StringBuilder("00000").append(i + 1);
+            } else if (i < 100) {
+                tickets[i] = new StringBuilder("0000").append(i + 1);
+            } else if (i < 1000) {
+                tickets[i] = new StringBuilder("000").append(i + 1);
+            } else if (i < 10000) {
+                tickets[i] = new StringBuilder("00").append(i + 1);
+            } else if (i < 100000) {
+                tickets[i] = new StringBuilder("0").append(i + 1);
+            } else {
+                tickets[i] = new StringBuilder("").append(i + 1);
+            }
+        }
+        int luckyTickets = 0;
+        int sumFirstThreeDigits = 0;
+        int sumLastThreeDigits = 0;
+        for (StringBuilder ticket : tickets) {
+            sumFirstThreeDigits = countTheSumOfFirstThreeDigits(ticket);
+            sumLastThreeDigits = countTheSumOfLastThreeDigits(ticket);
+            if (sumFirstThreeDigits == sumLastThreeDigits) {
+                luckyTickets++;
+            }
+        }
+        System.out.println("Number of lucky tickets = " + luckyTickets);
+    }
+
+    public static int countTheSumOfFirstThreeDigits(StringBuilder digits) {
+        int n = Integer.parseInt(digits.substring(0, 3));
+        int sum = 0;
+        while (n != 0) {
+            sum += (n % 10);
+            n /= 10;
+        }
+        return sum;
+    }
+
+    public static int countTheSumOfLastThreeDigits(StringBuilder digits) {
+        int n = Integer.parseInt(digits.substring(3, 6));
+        int sum = 0;
+        while (n != 0) {
+            sum += (n % 10);
+            n /= 10;
+        }
+        return sum;
+    }
 }
+
 
 
 
